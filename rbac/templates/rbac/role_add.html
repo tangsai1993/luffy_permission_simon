@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/change.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="luffy-container">
+        <form action="" class="form-horizontal" method="post" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                <label for="id_{{ field.name }}" class="col-sm-2 control-label">{{ field.label }}</label>
+                    <div class=" col-sm-8">
+                        {{ field }}
+                        <span class="error" style="color: red;">{{ field.errors.0 }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    {% load rbac %}
+    <div class="luffy-container">
+        <div class="col-md-12">
+            <form action="?type=generate" method="post">
+                {% csrf_token %}
+                {{ generate_formset.management_form }}
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="text-success"><i class="fa fa-book" aria-hidden="true"></i> 待新建的权限列表</strong>
+                        <button type="submit" class="btn btn-success right btn-xs"
+                                style="margin: -3px;padding: 2px 8px">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover  ">
+                            <thead class="bold">
+                            <tr>
+                                <th>序号</th>
+                                <th>名称</th>
+                                <th>URL</th>
+                                <th>别名</th>
+                                <th>菜单</th>
+                                <th>父权限</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for form in generate_formset %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    {% for field in form %}
+                                        <td>{{ field }} <span style="color: red;">{{ field.errors.0 }}</span></td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+
+
+            <div class="card mt-2">
+                <div class="card-header">
+                    <strong class="text-danger"><i class="fa fa-book" aria-hidden="true"></i> 待删除的权限列表</strong>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover  ">
+                        <thead class="bold">
+                        <tr>
+                            <th>序号</th>
+                            <th>名称</th>
+                            <th>URL</th>
+                            <th>别名</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in delete_row_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ row.title }}</td>
+                                <td>{{ row.url }}</td>
+                                <td>{{ row.name }}</td>
+                                <td><a href="{% url 'rbac:multi_permissions_del' pk=row.id %}" class="fa fa-trash-o red"
+                                       style="color: red"></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <form action="?type=update" method="post">
+                {% csrf_token %}
+                {{ update_formset.management_form }}
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <strong class="text-info"><i class="fa fa-book" aria-hidden="true"></i> 待更新的权限列表</strong>
+                        <button type="submit" class="btn btn-primary right btn-xs"
+                                style="margin: -3px;padding: 2px 8px">
+                            <i class="fa fa-save" aria-hidden="true"></i> 保存
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover  ">
+                            <thead class="bold">
+                            <tr>
+                                <th>序号</th>
+                                <th>名称</th>
+                                <th>URL</th>
+                                <th>别名</th>
+                                <th>菜单</th>
+                                <th>父权限</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for form in update_formset %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    {% for field in form %}
+                                        {% if forloop.first %}
+                                            {{ field }}
+                                        {% else %}
+                                            <td>{{ field }} <span style="color: red;">{{ field.errors.0 }}</span></td>
+                                        {% endif %}
+
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
