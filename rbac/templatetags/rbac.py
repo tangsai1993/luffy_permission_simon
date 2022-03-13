@@ -3,6 +3,8 @@
 from django.template import Library
 from django.conf import settings
 from collections import OrderedDict
+from rbac.service import urls
+
 register = Library()
 
 
