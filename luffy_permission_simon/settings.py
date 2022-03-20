@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': 'luffy_permission',
         'USER':'root',
         'PASSWORD':'Welcome1qazx@com',
-        'HOST':'192.168.0.105',
+        'HOST':'192.168.1.11',
         'PORT':3306,
         'CHARSET':'utf8'
     }
@@ -198,5 +198,8 @@ VALID_URL_LIST = [
 ]
 #自动发现路由排除的url
 AUTO_DISCOVER_EXCLUDE = [
-    '/admin/.*'
+    '/admin/.*',
+    '/login/',
+    '/logout/',
+    '/index/',
 ]

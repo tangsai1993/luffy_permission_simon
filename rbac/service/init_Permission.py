@@ -31,11 +31,11 @@ def init_Permission(current_user, request):
                                                                                       "permissions__menu__icon"
                                                                                       ).distinct()
 
+
     # 3. 获取权限+菜单信息
     permission_dict = {}
 
     menu_dict = {}
-
     for item in permission_queryset:
 
         permission_dict[item['permissions__name']] = {
